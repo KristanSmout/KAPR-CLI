@@ -19,8 +19,8 @@ namespace KAPR_CLI
 
         //Runtime Variables
         public static DirectoryInfo currentDirectory = new DirectoryInfo(AppContext.BaseDirectory);
-        Configuration.RuntimeConfiguration runtimeConfiguration = new Configuration.RuntimeConfiguration();
-        Configuration.ApplicationConfiguration applicationConfiguration = new Configuration.ApplicationConfiguration();
+        public static Configuration.RuntimeConfiguration runtimeConfiguration = new Configuration.RuntimeConfiguration();
+        public static Configuration.ApplicationConfiguration applicationConfiguration = new Configuration.ApplicationConfiguration();
 
         //KAPR Variables
         public static string baseURL = "google.co.uk";
@@ -34,7 +34,9 @@ namespace KAPR_CLI
         {
             if (debugMode)
             {
-                args = new string[] { "-a" };
+                Debug.debugRuntimeConfiguration();
+                Debug.debugApplicationConfiguration();
+                args = new string[] { "-h" };
                 Output.Debug("Debug mode enabled");
                 Output.Debug("Application Directory: " + currentDirectory.FullName);
             }

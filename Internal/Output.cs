@@ -15,7 +15,7 @@ namespace KAPR_CLI.Internal
         {
             DateTime date = DateTime.Now;
             string time = date.ToString("dd/MM/yyyy h:mm:ss tt");
-            Console.WriteLine($" {time} | {message}");
+            Console.WriteLine($" {time} | Log | {message}");
             executionLog.Add($" {time} | Log | {message}");
         }
 

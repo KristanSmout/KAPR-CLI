@@ -9,13 +9,23 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static KAPR_CLI.Internal.Output;
 using static KAPR_CLI.Internal.WebHelper;
+using System.Reflection;
 
 namespace KAPR_CLI.Internal
 {
     internal class Utilities
     {
 
-       
+        public static DirectoryInfo currentDirectory = new DirectoryInfo(AppContext.BaseDirectory);
+
+        public static string getVersion()
+        {
+        
+            Assembly? assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            string Fullname = assembly.FullName;
+            string version = Fullname.Split(',')[1].Split('=')[1];
+            return version;
+        }
 
         public static string FixLocalReferencesInHtml(ref string htmlContent, string baseUrl)
         {
@@ -45,7 +55,7 @@ namespace KAPR_CLI.Internal
                 mailMessage.Attachments.Add(attatchment);
             }
 
-            foreach (string recipient in runtimeConfiguration.emailRecipientList.Split(','))
+            foreach (string recipient in runtimeConfiguration.emailRecipientList)
             {
                 mailMessage.To.Add(recipient);
             }
@@ -54,5 +64,7 @@ namespace KAPR_CLI.Internal
 
 
         }
+    
+        
     }
 }
