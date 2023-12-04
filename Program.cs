@@ -1,18 +1,55 @@
 ﻿using System;
+using System.Reflection;
+using KAPR_CLI.Internal;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.DevTools;
 
 namespace KAPR_CLI
 {
     internal class Program
     {
         // Configuration Variables
-        public static bool debugMode = false;
+        public static bool debugMode = true;
         public static bool verboseMode = false;
 
         //Selenium Variables
+        public static ChromeDriver driver;
+        public static DevToolsSession session;
 
-        static void Main(string[] args)
+        //Runtime Variables
+        public static DirectoryInfo currentDirectory = new DirectoryInfo(AppContext.BaseDirectory);
+        Configuration.RuntimeConfiguration runtimeConfiguration = new Configuration.RuntimeConfiguration();
+        Configuration.ApplicationConfiguration applicationConfiguration = new Configuration.ApplicationConfiguration();
+
+        //KAPR Variables
+        public static string baseURL = "google.co.uk";
+        public static List<string> runInstructions = new List<string>();
+
+
+
+
+
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            if (debugMode)
+            {
+                args = new string[] { "-a" };
+                Output.Debug("Debug mode enabled");
+                Output.Debug("Application Directory: " + currentDirectory.FullName);
+            }
+
+            if (args.Length == 0)
+            {
+                Output.Error("No arguments provided\nRun the application with '-h' or '--help' for valid arguments.");
+            }
+            else
+            {
+                Arguments.parseArguments(args);
+            }
+
+            
+
         }
     }
 }
