@@ -36,7 +36,7 @@ namespace KAPR_CLI
             {
                 //Debug.debugRuntimeConfiguration();
                 //Debug.debugApplicationConfiguration();
-                args = new string[] { "" };
+                args = new string[] { "--config" };
                 Output.Debug("Debug mode enabled");
                 Output.Debug("Application Directory: " + currentDirectory.FullName);
             }

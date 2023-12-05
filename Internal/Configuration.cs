@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace KAPR_CLI.Internal
 {
@@ -19,7 +20,7 @@ namespace KAPR_CLI.Internal
             public bool smtpEnableSSL { get; set; } = true;
 
         }
-         
+
         public class RuntimeConfiguration
         {
             // KAPR Configuration
@@ -43,5 +44,74 @@ namespace KAPR_CLI.Internal
             public List<string> actions { get; set; } = new List<string>();
 
         }
+
+        public static void createConfiguration(string[] arguments)
+        {
+            string applicationConfigurationFilePath = null;
+            ApplicationConfiguration config = new ApplicationConfiguration();
+
+
+            if (arguments.Contains("-c") || arguments.Contains("--config"))
+            {
+                applicationConfigurationFilePath = arguments[Array.IndexOf(arguments, "-c") + 1];
+            }
+            else if (File.Exists($"{Utilities.currentDirectory}\\Configuration.json"))
+            {
+                applicationConfigurationFilePath = $"{Utilities.currentDirectory}\\Configuration.json";
+            }
+            else
+            {
+                Output.Warning("No configuration used");
+            }
+
+
+            if (applicationConfigurationFilePath != null)
+            {
+                try
+                {
+                    if (File.Exists(applicationConfigurationFilePath))
+                    {
+                        Program.applicationConfiguration = JsonConvert.DeserializeObject<ApplicationConfiguration>(File.ReadAllText(applicationConfigurationFilePath))!;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Output.Error($"Failed to load application configuration: {e.Message}");
+                    Environment.Exit(1);
+                }
+            }
+            else
+            {
+                Program.applicationConfiguration = new ApplicationConfiguration();
+            }
+
+            // Check Overrides
+            for (int i = 0; i < arguments.Length; i++)
+            {
+                switch (arguments[i])
+                {
+                    case "--smtpserver":
+                        Program.applicationConfiguration!.smtpServer = arguments[i + 1];
+                        break;
+                    case "--smtpport":
+                        Program.applicationConfiguration!.smtpPort = int.Parse(arguments[i + 1]);
+                        break;
+                    case "--smtpsender":
+                        Program.applicationConfiguration!.smtpSender = arguments[i + 1];
+                        break;
+                    case "--smtpusername":
+                        Program.applicationConfiguration!.smtpUsername = arguments[i + 1];
+                        break;
+                    case "--smtppassword":
+                        Program.applicationConfiguration!.smtpPassword = arguments[i + 1];
+                        break;
+                    case "--smtpenablessl":
+                        Program.applicationConfiguration!.smtpEnableSSL = bool.Parse(arguments[i + 1]);
+                        break;
+                }
+                i++;
+            }
+        }
+
     }
 }

@@ -14,6 +14,7 @@ namespace KAPR_CLI.Internal
         public static List<ArgumentDetails> argumentList = new List<ArgumentDetails>
         {
             new ArgumentDetails { Arguments = "-h, --help", Description = "Displays this help message" },
+            new ArgumentDetails { Arguments = "-a, --arguments", Description = "Displays a list of commands" },
             new ArgumentDetails { Arguments = "-c, --config", Description = "KAPR configuration filepath" },
             new ArgumentDetails { Arguments = "-f, --file", Description = "KARP action filepath" },
 
@@ -43,8 +44,8 @@ namespace KAPR_CLI.Internal
 
         public class ArgumentDetails
         {
-            public string Arguments { get; set; }
-            public string Description { get; set; }
+            public string Arguments { get; set; } = null;
+            public string Description { get; set; } = null;
         }
 
         public static void parseArguments(string[] arguments)
@@ -85,79 +86,67 @@ namespace KAPR_CLI.Internal
 
         public static void createConfiguration(string[] arguments)
         {
-            string runtimeConfigurationFilePath = null;
-            RuntimeConfiguration config = new RuntimeConfiguration();
+            string applicationConfigurationFilePath = null;
+            ApplicationConfiguration config = new ApplicationConfiguration();
 
 
-            if(arguments.Contains("-c") || arguments.Contains("--config"))
+            if (arguments.Contains("-c") || arguments.Contains("--config"))
             {
-                runtimeConfigurationFilePath = arguments[Array.IndexOf(arguments, "-c") + 1];
+                applicationConfigurationFilePath = arguments[Array.IndexOf(arguments, "-c") + 1];
+            }
+            else if (File.Exists($"{Utilities.currentDirectory}\\Configuration.json"))
+            {
+                applicationConfigurationFilePath = $"{Utilities.currentDirectory}\\Configuration.json";
             }
             else
             {
-                if(File.Exists($"{Utilities.currentDirectory}\\Actions.json"))
-                {
-                    runtimeConfigurationFilePath = $"{Utilities.currentDirectory}\\Actions.json";
-                }
-                else
-                {
-                    // Check Overrides
-
-
-                    Output.Warning("No configuration file provided");
-                }
+                Output.Warning("No configuration used");
             }
 
-            if (runtimeConfigurationFilePath != null)
+
+            if (applicationConfigurationFilePath != null)
             {
-                Program.runtimeConfiguration = JsonConvert.DeserializeObject<RuntimeConfiguration>(File.ReadAllText(runtimeConfigurationFilePath));
+                try
+                {
+                Program.applicationConfiguration = JsonConvert.DeserializeObject<ApplicationConfiguration>(File.ReadAllText(applicationConfigurationFilePath));
+                }
+                catch (Exception e)
+                {
+                    Output.Error($"Failed to load application configuration: {e.Message}");
+                    Environment.Exit(1);
+                }
             }
             else
             {
-                Program.runtimeConfiguration = new RuntimeConfiguration();
+                Program.applicationConfiguration = new ApplicationConfiguration();
             }
 
-
-
-
-
+            // Check Overrides
             for (int i = 0; i < arguments.Length; i++)
             {
-                string arg = arguments[i];
-                switch (arg.ToLower())
+                switch (arguments[i])
                 {
-                    case "-c":
-                    case "--config":
-                        ApplicationConfiguration applicationConfiguration = JsonConvert.DeserializeObject<ApplicationConfiguration>(File.ReadAllText(arguments[i + 1]));
-                        if (applicationConfiguration != null)
-                        {
-                            Output.Log("Application configuration loaded");
-                            Program.applicationConfiguration = applicationConfiguration;
-                        }
-                        else
-                        {
-                            Output.Error("Application configuration failed to load");
-                            Environment.Exit(1);
-                        }
+                    case "--smtpserver":
+                        Program.applicationConfiguration!.smtpServer = arguments[i + 1];
                         break;
-
-                    case "-f":
-                    case "--file":
-                        RuntimeConfiguration runtimeConfiguration = JsonConvert.DeserializeObject<RuntimeConfiguration>(File.ReadAllText(arguments[i + 1]));
-                        if (runtimeConfiguration != null)
-                        {
-                            Output.Log("Runtime configuration loaded");
-                            Program.runtimeConfiguration = runtimeConfiguration;
-                        }
-                        else
-                        {
-                            Output.Error("Runtime configuration failed to load");
-                            Environment.Exit(1);
-                        }
+                    case "--smtpport":
+                        Program.applicationConfiguration!.smtpPort = int.Parse(arguments[i + 1]);
                         break;
-
+                    case "--smtpsender":
+                        Program.applicationConfiguration!.smtpSender = arguments[i + 1];
+                        break;
+                    case "--smtpusername":
+                        Program.applicationConfiguration!.smtpUsername = arguments[i + 1];
+                        break;
+                    case "--smtppassword":
+                        Program.applicationConfiguration!.smtpPassword = arguments[i + 1];
+                        break;
+                    case "--smtpenablessl":
+                        Program.applicationConfiguration!.smtpEnableSSL = bool.Parse(arguments[i + 1]);
+                        break;
                 }
-            }
+                i++;
+            }        
         }
 
     }
