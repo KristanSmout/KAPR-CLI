@@ -91,13 +91,13 @@ namespace KAPR_CLI.Internal
 
             if(arguments.Contains("-c") || arguments.Contains("--config"))
             {
-                config.configurationFilePath = arguments[Array.IndexOf(arguments, "-c") + 1];
+                runtimeConfigurationFilePath = arguments[Array.IndexOf(arguments, "-c") + 1];
             }
             else
             {
-                if(File.Exists("kapr.json"))
+                if(File.Exists($"{Utilities.currentDirectory}\\Actions.json"))
                 {
-                    config.configurationFilePath = $"{Utilities.currentDirectory}\\Configuration.json";
+                    runtimeConfigurationFilePath = $"{Utilities.currentDirectory}\\Actions.json";
                 }
                 else
                 {
@@ -108,7 +108,14 @@ namespace KAPR_CLI.Internal
                 }
             }
 
-            Program.runtimeConfiguration = JsonConvert.DeserializeObject<RuntimeConfiguration>(File.ReadAllText(runtimeConfigurationFilePath));
+            if (runtimeConfigurationFilePath != null)
+            {
+                Program.runtimeConfiguration = JsonConvert.DeserializeObject<RuntimeConfiguration>(File.ReadAllText(runtimeConfigurationFilePath));
+            }
+            else
+            {
+                Program.runtimeConfiguration = new RuntimeConfiguration();
+            }
 
 
 

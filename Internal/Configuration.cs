@@ -28,17 +28,17 @@ namespace KAPR_CLI.Internal
             public string? functionFileDirectory { get; set; } = null;
             public string? outputDirectory { get; set; } = null;
             public bool forceScreenshot { get; set; } = false;
-            public int? timeout { get; set; } = 5;
+            public int? timeout { get; set; } = 500;
 
             // Optional Configuration
-            public bool? sendEmail { get; set; } = null;
+            public bool? sendEmail { get; set; } = false;
             public List<string>? emailRecipientList { get; set; } = null;
 
 
             // Selenium Configuration
             public string? userAgent { get; set; } = null;
             public bool headless { get; set; } = false;
-            public string? screenResolution { get; set; } = null;
+            public string? screenResolution { get; set; } = "1920x1080";
 
             public List<string> actions { get; set; } = new List<string>();
 
