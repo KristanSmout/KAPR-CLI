@@ -64,7 +64,8 @@ namespace KAPR_CLI.Internal
             }
             else
             {
-                createConfiguration(arguments);
+                Configuration.createConfiguration(arguments);
+                Configuration.createActionConfiguration(arguments);
             }
         }
 

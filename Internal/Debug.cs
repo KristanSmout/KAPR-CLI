@@ -44,5 +44,34 @@ namespace KAPR_CLI.Internal
             File.WriteAllText($"{Utilities.currentDirectory}\\Configuration.json", json);
 
         }
+
+        public static void ShowConfigruationandActions()
+        {
+            Output.Log("Runtime Configuration");
+            Output.Log("Logging: " + Program.runtimeConfiguration.logging);
+            Output.Log("Configuration File Path: " + Program.runtimeConfiguration.configurationFilePath);
+            Output.Log("Function File Directory: " + Program.runtimeConfiguration.functionFileDirectory);
+            Output.Log("Output Directory: " + Program.runtimeConfiguration.outputDirectory);
+            Output.Log("Force Screenshot: " + Program.runtimeConfiguration.forceScreenshot);
+            Output.Log("Timeout: " + Program.runtimeConfiguration.timeout);
+            Output.Log("Send Email: " + Program.runtimeConfiguration.sendEmail);
+            Output.Log("Email Recipient List: " + Program.runtimeConfiguration.emailRecipientList);
+            Output.Log("User Agent: " + Program.runtimeConfiguration.userAgent);
+            Output.Log("Headless: " + Program.runtimeConfiguration.headless);
+            Output.Log("Screen Resolution: " + Program.runtimeConfiguration.screenResolution);
+            Output.Log("Actions: ");
+            foreach (string action in Program.runtimeConfiguration.actions)
+            {
+                Output.Log("    " + action);
+            }
+
+            Output.Log("Application Configuration");
+            Output.Log("SMTP Server: " + Program.applicationConfiguration.smtpServer);
+            Output.Log("SMTP Port: " + Program.applicationConfiguration.smtpPort);
+            Output.Log("SMTP Sender: " + Program.applicationConfiguration.smtpSender);
+            Output.Log("SMTP Username: " + Program.applicationConfiguration.smtpUsername);
+            Output.Log("SMTP Password: " + Program.applicationConfiguration.smtpPassword);
+            Output.Log("SMTP Enable SSL: " + Program.applicationConfiguration.smtpEnableSSL);
+        }
     }
 }

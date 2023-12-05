@@ -113,5 +113,91 @@ namespace KAPR_CLI.Internal
             }
         }
 
+        public static void createActionConfiguration(string[] arguments)
+        {
+            string runtimeConfigurationFilePath = null;
+            RuntimeConfiguration config = new RuntimeConfiguration();
+
+            if(arguments.Contains("-f") || arguments.Contains("--function"))
+            {
+                runtimeConfigurationFilePath = arguments[Array.IndexOf(arguments, "-f") + 1];
+            }
+            else if (File.Exists($"{Utilities.currentDirectory}\\Actions.json"))
+            {
+                runtimeConfigurationFilePath = $"{Utilities.currentDirectory}\\Actions.json";
+            }
+            else
+            {
+                Output.Warning("No action configuration used");
+            }
+
+            if (runtimeConfigurationFilePath != null)
+            {
+                try
+                {
+                    if (File.Exists(runtimeConfigurationFilePath))
+                    {
+                        Program.runtimeConfiguration = JsonConvert.DeserializeObject<RuntimeConfiguration>(File.ReadAllText(runtimeConfigurationFilePath))!;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Output.Error($"Failed to load runtime configuration: {e.Message}");
+                    Environment.Exit(1);
+                }
+            }
+            else
+            {
+                Program.runtimeConfiguration = new RuntimeConfiguration();
+            }
+
+            // Check Overrides
+            for (int i = 0; i < arguments.Length; i++)
+            {
+                switch (arguments[i])
+                {
+                    case "--logging":
+                        Program.runtimeConfiguration!.logging = bool.Parse(arguments[i + 1]);
+                        break;
+                    case "--configurationfilepath":
+                        Program.runtimeConfiguration!.configurationFilePath = arguments[i + 1];
+                        break;
+                    case "--functionfiledirectory":
+                        Program.runtimeConfiguration!.functionFileDirectory = arguments[i + 1];
+                        break;
+                    case "--outputdirectory":
+                        Program.runtimeConfiguration!.outputDirectory = arguments[i + 1];
+                        break;
+                    case "--forcescreenshot":
+                        Program.runtimeConfiguration!.forceScreenshot = bool.Parse(arguments[i + 1]);
+                        break;
+                    case "--timeout":
+                        Program.runtimeConfiguration!.timeout = int.Parse(arguments[i + 1]);
+                        break;
+                    case "--sendemail":
+                        Program.runtimeConfiguration!.sendEmail = bool.Parse(arguments[i + 1]);
+                        break;
+                    case "--emailrecipientlist":
+                        Program.runtimeConfiguration!.emailRecipientList = arguments[i + 1].Split(",").ToList();
+                        break;
+                    case "--useragent":
+                        Program.runtimeConfiguration!.userAgent = arguments[i + 1];
+                        break;
+                    case "--headless":
+                        Program.runtimeConfiguration!.headless = bool.Parse(arguments[i + 1]);
+                        break;
+                    case "--screenresolution":
+                        Program.runtimeConfiguration!.screenResolution = arguments[i + 1];
+                        break;
+                    case "--actions":
+                        Program.runtimeConfiguration!.actions = arguments[i + 1].Split(",").ToList();
+                        break;
+                }
+                i++;
+            }
+
+        }
+
+
     }
 }

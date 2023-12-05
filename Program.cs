@@ -36,7 +36,9 @@ namespace KAPR_CLI
             {
                 //Debug.debugRuntimeConfiguration();
                 //Debug.debugApplicationConfiguration();
-                args = new string[] { "--config" };
+                string debugargs = "--smtpserver smtp.test.com --smtpport 58700 --smtpsender testsender --smtpusername testusername --smtppassword testpassword --smtpenablessl true";
+                args = debugargs.Split(" ");
+
                 Output.Debug("Debug mode enabled");
                 Output.Debug("Application Directory: " + currentDirectory.FullName);
             }
@@ -48,6 +50,7 @@ namespace KAPR_CLI
             else
             {
                 Arguments.parseArguments(args);
+                Debug.ShowConfigruationandActions();
             }
 
             
