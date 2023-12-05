@@ -19,13 +19,13 @@ namespace KAPR_CLI.Internal
             new ArgumentDetails { Arguments = "-f, --file", Description = "KARP action filepath" },
 
             //Runtime Overrides
-            new ArgumentDetails { Arguments = "-l, --logging", Description = "Logging" },
+            new ArgumentDetails { Arguments = "-l, --logging", Description = "Logging [TRUE/FALSE]" },
             new ArgumentDetails { Arguments = "-o, --output", Description = "Output Directory" },
-            new ArgumentDetails { Arguments = "-s, --screenshot", Description = "Force Screenshots" },
+            new ArgumentDetails { Arguments = "-s, --screenshot", Description = "Force Screenshots [TRUE/FALSE]" },
             new ArgumentDetails { Arguments = "-t, --timeout", Description = "Timeout" },
             new ArgumentDetails { Arguments = "-e, --email", Description = "Email Recipient(s)" },
-            new ArgumentDetails { Arguments = "-u, --useragent", Description = "User Agent" },
-            new ArgumentDetails { Arguments = "-h, --headless", Description = "Headless" },
+            new ArgumentDetails { Arguments = "-u, --useragent", Description = "User Agent [TRUE/FALSE]" },
+            new ArgumentDetails { Arguments = "-h, --headless", Description = "Headless [TRUE/FALSE]" },
             new ArgumentDetails { Arguments = "-r, --resolution", Description = "Screen Resolution (X,Y)" },
 
             new ArgumentDetails { Arguments = "", Description = "" },
@@ -44,8 +44,8 @@ namespace KAPR_CLI.Internal
 
         public class ArgumentDetails
         {
-            public string Arguments { get; set; } = null;
-            public string Description { get; set; } = null;
+            public string? Arguments { get; set; }
+            public string? Description { get; set; }
         }
 
         public static void parseArguments(string[] arguments)
@@ -71,8 +71,8 @@ namespace KAPR_CLI.Internal
 
         public static void printArgumentsTable()
         {
-            int maxArgumentsLength = Math.Max("Arguments".Length, argumentList.Max(a => a.Arguments.Length));
-            int maxDescriptionLength = Math.Max("Description".Length, argumentList.Max(a => a.Description.Length));
+            int maxArgumentsLength = Math.Max("Arguments".Length, argumentList.Max(a => a.Arguments!.Length));
+            int maxDescriptionLength = Math.Max("Description".Length, argumentList.Max(a => a.Description!.Length));
 
             Console.WriteLine($"| {"Arguments".PadRight(maxArgumentsLength)} | {"Description".PadRight(maxDescriptionLength)} |");
 
@@ -81,13 +81,13 @@ namespace KAPR_CLI.Internal
 
             foreach (var arg in argumentList)
             {
-                Console.WriteLine($"| {arg.Arguments.PadRight(maxArgumentsLength)} | {arg.Description.PadRight(maxDescriptionLength)} |");
+                Console.WriteLine($"| {arg.Arguments!.PadRight(maxArgumentsLength)} | {arg.Description!.PadRight(maxDescriptionLength)} |");
             }
         }
 
         public static void createConfiguration(string[] arguments)
         {
-            string applicationConfigurationFilePath = null;
+            string? applicationConfigurationFilePath = null!;
             ApplicationConfiguration config = new ApplicationConfiguration();
 
 
@@ -109,7 +109,7 @@ namespace KAPR_CLI.Internal
             {
                 try
                 {
-                Program.applicationConfiguration = JsonConvert.DeserializeObject<ApplicationConfiguration>(File.ReadAllText(applicationConfigurationFilePath));
+                Program.applicationConfiguration = JsonConvert.DeserializeObject<ApplicationConfiguration>(File.ReadAllText(applicationConfigurationFilePath))!;
                 }
                 catch (Exception e)
                 {

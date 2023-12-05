@@ -55,7 +55,11 @@ namespace KAPR_CLI.Internal
             Output.Log("Force Screenshot: " + Program.runtimeConfiguration.forceScreenshot);
             Output.Log("Timeout: " + Program.runtimeConfiguration.timeout);
             Output.Log("Send Email: " + Program.runtimeConfiguration.sendEmail);
-            Output.Log("Email Recipient List: " + Program.runtimeConfiguration.emailRecipientList);
+            Output.Log("Email Recipient List: ");
+            foreach (string email in Program.runtimeConfiguration.emailRecipientList)
+            {
+                Output.Log("    " + email);
+            }
             Output.Log("User Agent: " + Program.runtimeConfiguration.userAgent);
             Output.Log("Headless: " + Program.runtimeConfiguration.headless);
             Output.Log("Screen Resolution: " + Program.runtimeConfiguration.screenResolution);

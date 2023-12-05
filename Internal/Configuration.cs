@@ -33,7 +33,7 @@ namespace KAPR_CLI.Internal
 
             // Optional Configuration
             public bool? sendEmail { get; set; } = false;
-            public List<string>? emailRecipientList { get; set; } = null;
+            public List<string>? emailRecipientList { get; set; } = new List<string>();
 
 
             // Selenium Configuration

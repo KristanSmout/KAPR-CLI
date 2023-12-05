@@ -91,7 +91,6 @@ namespace KAPR_CLI.Internal
 
                     default:
                         Output.Log($"Locator Type {type} not found: {value}");
-                        return null;
                         break;
                 }
             }
