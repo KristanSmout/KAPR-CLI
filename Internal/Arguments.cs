@@ -15,8 +15,10 @@ namespace KAPR_CLI.Internal
         {
             new ArgumentDetails { Arguments = "-h, --help", Description = "Displays this help message" },
             new ArgumentDetails { Arguments = "-a, --arguments", Description = "Displays a list of commands" },
+            new ArgumentDetails { Arguments = "-v, --version", Description = "Displays the current version" },
             new ArgumentDetails { Arguments = "-c, --config", Description = "KAPR configuration filepath" },
-            new ArgumentDetails { Arguments = "-f, --file", Description = "KARP action filepath" },
+            new ArgumentDetails { Arguments = "-f, --functions", Description = "KAPR configuration filepath" },
+            new ArgumentDetails { Arguments = "-i, --instructions", Description = "KARP instruction filepath" },
 
             //Runtime Overrides
             new ArgumentDetails { Arguments = "-l, --logging", Description = "Logging [TRUE/FALSE]" },

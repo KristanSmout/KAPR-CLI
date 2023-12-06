@@ -22,7 +22,7 @@ namespace KAPR_CLI.Internal
             runtimeConfiguration.emailRecipientList = new List<string> { "ksmout@test.com", "test.test@test.cs" };
             runtimeConfiguration.userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0";
             runtimeConfiguration.headless = false;
-            runtimeConfiguration.screenResolution = "1920x1080";
+            runtimeConfiguration.screenResolution = new string[] { "1920", "1080" };
             runtimeConfiguration.actions = new List<string> { "Action1", "Action2", "Action3" };
 
             //Save to file

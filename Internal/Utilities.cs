@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using static KAPR_CLI.Internal.Output;
 using static KAPR_CLI.Internal.WebHelper;
 using System.Reflection;
+using OpenQA.Selenium.Chrome;
 
 namespace KAPR_CLI.Internal
 {
@@ -20,7 +21,7 @@ namespace KAPR_CLI.Internal
 
         public static string getVersion()
         {
-        
+
             Assembly? assembly = System.Reflection.Assembly.GetExecutingAssembly();
             string Fullname = assembly.FullName;
             string version = Fullname.Split(',')[1].Split('=')[1];
@@ -64,7 +65,45 @@ namespace KAPR_CLI.Internal
 
 
         }
-    
-        
+
+        public static void createOutputDirectory()
+        {
+            if (!Directory.Exists(Program.runtimeConfiguration.outputDirectory))
+            {
+                Output.Debug("Creating output directory");
+                try
+                {
+                    Directory.CreateDirectory(Program.runtimeConfiguration.outputDirectory);
+                }
+                catch (Exception e)
+                {
+                    Output.Error("Failed to create output directory");
+                    Output.Error(e.Message);
+                    Environment.Exit(1);
+                }
+            }
+
+            Program.outputDirectory = Directory.CreateDirectory($"{Program.runtimeConfiguration.outputDirectory}\\{DateTime.Now.ToString("dd-MM-yyyy h-mm-ss tt")}").ToString();
+            Directory.CreateDirectory($"{Program.outputDirectory}\\screenshots");
+            Directory.CreateDirectory($"{Program.outputDirectory}\\snapshots");
+            Output.Debug($"Output directory created: {Program.outputDirectory}");
+
+        }
+
+        public static void setupChrome()
+        {
+            Output.Debug("Setting up Chrome");
+            ChromeOptions chromeOptions = new ChromeOptions();
+            
+            
+
+            if(Program.runtimeConfiguration.headless)
+            {
+                Output.Debug("Headless mode enabled");
+
+            }
+
+        }
+
     }
 }

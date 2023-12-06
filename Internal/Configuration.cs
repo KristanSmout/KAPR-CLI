@@ -39,8 +39,7 @@ namespace KAPR_CLI.Internal
             // Selenium Configuration
             public string? userAgent { get; set; } = null;
             public bool headless { get; set; } = false;
-            public string? screenResolution { get; set; } = "1920x1080";
-
+            public string[] screenResolution { get; set; } = {"1920","1080"};
             public List<string> actions { get; set; } = new List<string>();
 
         }
@@ -157,39 +156,47 @@ namespace KAPR_CLI.Internal
                 switch (arguments[i])
                 {
                     case "--logging":
+                    case "-l":
                         Program.runtimeConfiguration!.logging = bool.Parse(arguments[i + 1]);
                         break;
-                    case "--configurationfilepath":
+                    case "--config":
+                    case "-c":
                         Program.runtimeConfiguration!.configurationFilePath = arguments[i + 1];
                         break;
-                    case "--functionfiledirectory":
+                    case "--functions":
+                    case "-f":
                         Program.runtimeConfiguration!.functionFileDirectory = arguments[i + 1];
                         break;
-                    case "--outputdirectory":
+                    case "--output":
+                    case "-o":
                         Program.runtimeConfiguration!.outputDirectory = arguments[i + 1];
                         break;
-                    case "--forcescreenshot":
+                    case "--screenshot":
+                    case "-s":
                         Program.runtimeConfiguration!.forceScreenshot = bool.Parse(arguments[i + 1]);
                         break;
                     case "--timeout":
+                    case "-t":
                         Program.runtimeConfiguration!.timeout = int.Parse(arguments[i + 1]);
                         break;
-                    case "--sendemail":
-                        Program.runtimeConfiguration!.sendEmail = bool.Parse(arguments[i + 1]);
-                        break;
-                    case "--emailrecipientlist":
-                        Program.runtimeConfiguration!.emailRecipientList = arguments[i + 1].Split(",").ToList();
+                    case "--email":
+                    case "-e":
+                        Program.runtimeConfiguration!.emailRecipientList =arguments[i + 1].Split(",").ToList();
                         break;
                     case "--useragent":
+                    case "-u":
                         Program.runtimeConfiguration!.userAgent = arguments[i + 1];
                         break;
                     case "--headless":
+                    case "-h":
                         Program.runtimeConfiguration!.headless = bool.Parse(arguments[i + 1]);
                         break;
-                    case "--screenresolution":
-                        Program.runtimeConfiguration!.screenResolution = arguments[i + 1];
+                    case "--resolution":
+                    case "-r":
+                        Program.runtimeConfiguration!.screenResolution = new string[] { arguments[i + 1], arguments[i + 2] };
                         break;
-                    case "--actions":
+                    case "--instructions":
+                    case "-i":
                         Program.runtimeConfiguration!.actions = arguments[i + 1].Split(",").ToList();
                         break;
                 }

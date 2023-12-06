@@ -22,6 +22,7 @@ namespace KAPR_CLI
         public static DirectoryInfo currentDirectory = new DirectoryInfo(AppContext.BaseDirectory);
         public static Configuration.RuntimeConfiguration runtimeConfiguration = new Configuration.RuntimeConfiguration();
         public static Configuration.ApplicationConfiguration applicationConfiguration = new Configuration.ApplicationConfiguration();
+        public static string outputDirectory = "";
 
         //KAPR Variables
         public static string baseURL = "google.co.uk";
@@ -35,13 +36,26 @@ namespace KAPR_CLI
         {
             if (debugMode)
             {
+
+                //Useragent Regex
+                Regex userAgentRegex = new Regex(@"-(-useragent|u) (.+?)\s(?=-)");
+                Regex removeUserAgentRegex = new Regex(@"-(-useragent|u) .*-");
+
+
                 //Debug.debugRuntimeConfiguration();
                 //Debug.debugApplicationConfiguration();
-                string debugargs = @"--smtpserver smtp.test.com --smtpport 58700 --smtpsender testsender --smtpusername testusername --smtppassword testpassword --smtpenablessl true --file F:\Development\Private-Software\KAPR-CLI\bin\Debug\net7.0\Actions.json --headless true --screenresolution 1920x1080 --useragent Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0 --outputdirectory F:\Development\Private-Software\KAPR-CLI\bin\Debug\net7.0\Output --timeout 5 --force true --sendemail true --emailrecipientlist test@test.com --logging true";
-                
-                //Useragent Regex
-                Regex userAgentRegex = new Regex(@"-(useragent|u) (.+?)\s(?=-)");
-                Regex removeUserAgentRegex = new Regex(@"-(useragent|u) .*-");
+                string debugargs = @"--smtpserver smtp.test.com --smtpport 58700 --smtpsender testsender --smtpusername testusername --smtppassword testpassword --smtpenablessl true --file F:\Development\Private-Software\KAPR-CLI\bin\Debug\net7.0\Actions.json --headless true --resolution 1920,1080 --useragent ""Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0"" --outputdirectory F:\Development\Private-Software\KAPR-CLI\bin\Debug\net7.0\Output --timeout 5 --sendemail true --emailrecipientlist test@test.com --logging true";
+
+                Regex regex = new Regex(@"[^\s""]+|""(""([^""]*)""|([^""]*))+""");
+                MatchCollection matches = regex.Matches(debugargs);
+
+                string[] debugargsarray = new string[matches.Count];
+                for (int i = 0; i < matches.Count; i++)
+                {
+                    debugargsarray[i] = matches[i].Value.Trim('"');
+                }
+
+                args = debugargsarray;
 
 
                 Output.Debug("Debug mode enabled");
@@ -54,11 +68,34 @@ namespace KAPR_CLI
             }
             else
             {
+                foreach (string arg in args)
+                {
+                    if (arg == "-r" || arg == "--resolution")
+                    {
+                        int index = Array.IndexOf(args, arg);
+                        string resolution = args[index + 1];
+                        args = args.Where((source, i) => i != index && i != index + 1).ToArray();
+                        string[] resolutionArray = resolution.Split('x', ',');
+                        string[] newargs = { arg, resolutionArray[0], resolutionArray[1] };
+                        args = args.Concat(newargs).ToArray();
+                        break;
+                    }    
+                }
+
+                foreach (string arg in args)
+                {
+                    Console.WriteLine(arg);
+                }
+
                 Arguments.parseArguments(args);
                 Debug.ShowConfigruationandActions();
+                Utilities.createOutputDirectory();
+                Utilities.setupChrome();
+
+
             }
 
-            
+
 
         }
     }
