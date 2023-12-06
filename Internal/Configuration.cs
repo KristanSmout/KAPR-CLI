@@ -117,9 +117,9 @@ namespace KAPR_CLI.Internal
             string runtimeConfigurationFilePath = null;
             RuntimeConfiguration config = new RuntimeConfiguration();
 
-            if(arguments.Contains("-f") || arguments.Contains("--function"))
+            if(arguments.Contains("-i") || arguments.Contains("--instructions"))
             {
-                runtimeConfigurationFilePath = arguments[Array.IndexOf(arguments, "-f") + 1];
+                runtimeConfigurationFilePath = arguments[Array.IndexOf(arguments, "-i") + 1];
             }
             else if (File.Exists($"{Utilities.currentDirectory}\\Actions.json"))
             {
@@ -187,17 +187,13 @@ namespace KAPR_CLI.Internal
                     case "-u":
                         Program.runtimeConfiguration!.userAgent = arguments[i + 1];
                         break;
-                    case "--headless":
-                    case "-h":
+                    case "--visible":
+                    case "-v":
                         Program.runtimeConfiguration!.headless = bool.Parse(arguments[i + 1]);
                         break;
                     case "--resolution":
                     case "-r":
                         Program.runtimeConfiguration!.screenResolution = new string[] { arguments[i + 1], arguments[i + 2] };
-                        break;
-                    case "--instructions":
-                    case "-i":
-                        Program.runtimeConfiguration!.actions = arguments[i + 1].Split(",").ToList();
                         break;
                 }
                 i++;

@@ -94,16 +94,96 @@ namespace KAPR_CLI.Internal
         {
             Output.Debug("Setting up Chrome");
             ChromeOptions chromeOptions = new ChromeOptions();
-            
-            
 
+            //Screen Resolution
+             chromeOptions.AddArgument($"window-size={Program.runtimeConfiguration.screenResolution[0]},{Program.runtimeConfiguration.screenResolution[1]}");
+
+            //User Agent
+            chromeOptions.AddArgument($"--user-agent={Program.runtimeConfiguration.userAgent}");
+
+            //Headless
             if(Program.runtimeConfiguration.headless)
             {
-                Output.Debug("Headless mode enabled");
+                chromeOptions.AddArgument("--headless");
+            }
+
+            Program.driver = new ChromeDriver(chromeOptions);
+            using (Program.driver)
+            {
+                Program.session = Program.driver.GetDevToolsSession();
+
+                foreach(string action in Program.runtimeConfiguration.actions)
+                {
+                    Actions.ExecuteCommand(action);
+                }
 
             }
 
+
+
         }
+
+
+        //Chrome Actions
+        public static IWebElement element(Actions.LocatorType type, string value)
+        {
+            IWebElement element = null;
+
+            try
+            {
+
+                switch (type)
+                {
+                    case (Actions.LocatorType)LocatorType.Id:
+                        element = Program.driver.FindElement(By.Id(value));
+                        break;
+
+                    case (Actions.LocatorType)LocatorType.CssSelector:
+                        element = Program.driver.FindElement(By.CssSelector(value));
+                        break;
+
+                    case (Actions.LocatorType)LocatorType.XPath:
+                        element = Program.driver.FindElement(By.XPath(value));
+                        break;
+
+                    case (Actions.LocatorType)LocatorType.Text:
+                        element = Program.driver.FindElement(By.XPath($"//*[text()='{value}']"));
+                        break;
+
+                    case (Actions.LocatorType)LocatorType.LinkText:
+                        element = Program.driver.FindElement(By.LinkText(value));
+                        break;
+
+                    case (Actions.LocatorType)LocatorType.PartialLinkText:
+                        element = Program.driver.FindElement(By.PartialLinkText(value));
+                        break;
+
+                    case (Actions.LocatorType)LocatorType.Name:
+                        element = Program.driver.FindElement(By.Name(value));
+                        break;
+
+                    case (Actions.LocatorType)LocatorType.TagName:
+                        element = Program.driver.FindElement(By.TagName(value));
+                        break;
+
+                    case (Actions.LocatorType)LocatorType.JavaScript:
+                        IJavaScriptExecutor js = (IJavaScriptExecutor)Program.driver;
+                        element = (IWebElement)js.ExecuteScript($"return document.querySelector('{value}')");
+                        break;
+
+                    default:
+                        Output.Debug($"Locator Type {type} not found: {value}");
+                        return null;
+                }
+            }
+            catch (NoSuchElementException e)
+            {
+                return null;
+            }
+
+            return element;
+        }
+
 
     }
 }

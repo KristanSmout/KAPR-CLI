@@ -25,7 +25,7 @@ namespace KAPR_CLI
         public static string outputDirectory = "";
 
         //KAPR Variables
-        public static string baseURL = "google.co.uk";
+        public static string baseURL = "";
         public static List<string> runInstructions = new List<string>();
 
 
@@ -36,15 +36,15 @@ namespace KAPR_CLI
         {
             if (debugMode)
             {
+                Debug.debugRuntimeConfiguration();
 
                 //Useragent Regex
                 Regex userAgentRegex = new Regex(@"-(-useragent|u) (.+?)\s(?=-)");
                 Regex removeUserAgentRegex = new Regex(@"-(-useragent|u) .*-");
 
-
-                //Debug.debugRuntimeConfiguration();
-                //Debug.debugApplicationConfiguration();
-                string debugargs = @"--smtpserver smtp.test.com --smtpport 58700 --smtpsender testsender --smtpusername testusername --smtppassword testpassword --smtpenablessl true --file F:\Development\Private-Software\KAPR-CLI\bin\Debug\net7.0\Actions.json --headless true --resolution 1920,1080 --useragent ""Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0"" --outputdirectory F:\Development\Private-Software\KAPR-CLI\bin\Debug\net7.0\Output --timeout 5 --sendemail true --emailrecipientlist test@test.com --logging true";
+                //string debugargs = @"--smtpserver smtp.test.com --smtpport 58700 --smtpsender testsender --smtpusername testusername --smtppassword testpassword --smtpenablessl true --file F:\Development\Private-Software\KAPR-CLI\bin\Debug\net7.0\Actions.json --headless true --resolution 1920,1080 --useragent ""Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0"" --outputdirectory F:\Development\Private-Software\KAPR-CLI\bin\Debug\net7.0\Output --timeout 5 --sendemail true --emailrecipientlist test@test.com --logging true";
+                string debugargs = @"-v true";
+                //
 
                 Regex regex = new Regex(@"[^\s""]+|""(""([^""]*)""|([^""]*))+""");
                 MatchCollection matches = regex.Matches(debugargs);
@@ -80,11 +80,6 @@ namespace KAPR_CLI
                         args = args.Concat(newargs).ToArray();
                         break;
                     }    
-                }
-
-                foreach (string arg in args)
-                {
-                    Console.WriteLine(arg);
                 }
 
                 Arguments.parseArguments(args);

@@ -15,7 +15,7 @@ namespace KAPR_CLI.Internal
         {
             new ArgumentDetails { Arguments = "-h, --help", Description = "Displays this help message" },
             new ArgumentDetails { Arguments = "-a, --arguments", Description = "Displays a list of commands" },
-            new ArgumentDetails { Arguments = "-v, --version", Description = "Displays the current version" },
+            new ArgumentDetails { Arguments = "--version", Description = "Displays the current version" },
             new ArgumentDetails { Arguments = "-c, --config", Description = "KAPR configuration filepath" },
             new ArgumentDetails { Arguments = "-f, --functions", Description = "KAPR configuration filepath" },
             new ArgumentDetails { Arguments = "-i, --instructions", Description = "KARP instruction filepath" },
@@ -27,7 +27,7 @@ namespace KAPR_CLI.Internal
             new ArgumentDetails { Arguments = "-t, --timeout", Description = "Timeout" },
             new ArgumentDetails { Arguments = "-e, --email", Description = "Email Recipient(s)" },
             new ArgumentDetails { Arguments = "-u, --useragent", Description = "User Agent [TRUE/FALSE]" },
-            new ArgumentDetails { Arguments = "-h, --headless", Description = "Headless [TRUE/FALSE]" },
+            new ArgumentDetails { Arguments = "-v, --visible", Description = "View Browser [TRUE/FALSE]" },
             new ArgumentDetails { Arguments = "-r, --resolution", Description = "Screen Resolution (X,Y)" },
 
             new ArgumentDetails { Arguments = "", Description = "" },
@@ -55,14 +55,17 @@ namespace KAPR_CLI.Internal
             if (arguments.Contains("-h") || arguments.Contains("--help"))
             {
                 printArgumentsTable();
+                Environment.Exit(0);
             }
-            else if (arguments.Contains("-v") || arguments.Contains("--version"))
+            else if (arguments.Contains("--version"))
             {
-                Output.Log($"KAPR CLI {Utilities.getVersion()}");
+                Console.WriteLine($"KAPR CLI {Utilities.getVersion()}");
+                Environment.Exit(0);
             }
             else if (arguments.Contains("-a") || arguments.Contains("--actions"))
             {
                 Actions.PrintActionTable();
+                Environment.Exit(0);
             }
             else
             {
