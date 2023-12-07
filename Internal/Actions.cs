@@ -320,6 +320,10 @@ namespace KAPR_CLI.Internal
             {
                 element.Click();
             }
+            else
+            {
+                Output.Error($"Element {value} Not Found");
+            }
         }
 
         public static void Navigate(string url)

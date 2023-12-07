@@ -24,6 +24,7 @@ namespace KAPR_CLI.Internal
         public class RuntimeConfiguration
         {
             // KAPR Configuration
+            public string Name { get; set; } = null;
             public bool logging { get; set; } = false;
             public string? configurationFilePath { get; set; } = null;
             public string? functionFileDirectory { get; set; } = null;

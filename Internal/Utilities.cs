@@ -35,18 +35,18 @@ namespace KAPR_CLI.Internal
             return htmlContent;
         }
 
-        public static void sendEmail(Configuration.ApplicationConfiguration? applicationConfiguration = null, Configuration.RuntimeConfiguration runtimeConfiguration = null, string subject = "KAPR Error", string body = "An undefined error has occured", Attachment? attatchment = null)
+        public static void sendEmail(string subject = "KAPR Error", string body = "An undefined error has occured", Attachment? attatchment = null)
         {
-            SmtpClient smtpClient = new SmtpClient(applicationConfiguration.smtpServer)
+            SmtpClient smtpClient = new SmtpClient(Program.applicationConfiguration.smtpServer)
             {
-                Port = applicationConfiguration.smtpPort,
-                Credentials = new System.Net.NetworkCredential(applicationConfiguration.smtpUsername, applicationConfiguration.smtpPassword),
-                EnableSsl = applicationConfiguration.smtpEnableSSL,
+                Port = Program.applicationConfiguration.smtpPort,
+                Credentials = new System.Net.NetworkCredential(Program.applicationConfiguration.smtpUsername, Program.applicationConfiguration.smtpPassword),
+                EnableSsl = Program.applicationConfiguration.smtpEnableSSL,
             };
 
             MailMessage mailMessage = new MailMessage
             {
-                From = new MailAddress(applicationConfiguration.smtpSender),
+                From = new MailAddress(Program.applicationConfiguration.smtpSender),
                 Subject = subject,
                 Body = body,
             };
@@ -56,7 +56,7 @@ namespace KAPR_CLI.Internal
                 mailMessage.Attachments.Add(attatchment);
             }
 
-            foreach (string recipient in runtimeConfiguration.emailRecipientList)
+            foreach (string recipient in Program.runtimeConfiguration.emailRecipientList)
             {
                 mailMessage.To.Add(recipient);
             }

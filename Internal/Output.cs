@@ -33,6 +33,21 @@ namespace KAPR_CLI.Internal
             string time = date.ToString("dd/MM/yyyy h:mm:ss tt");
             Console.WriteLine($" {time} | Error | {message}");
             executionLog.Add($" {time} | Error | {message}");
+
+            //Send Email
+            if (Program.runtimeConfiguration.sendEmail == true)
+            {
+                Output.Debug("Sending Email");
+                try
+                {
+                    Utilities.sendEmail(message);
+                }
+                catch (Exception e)
+                {
+                    Output.Critical("Failed to send email");
+                    Output.Critical(e.Message);
+                }
+            }
         }
 
         public static void Critical(string message)
