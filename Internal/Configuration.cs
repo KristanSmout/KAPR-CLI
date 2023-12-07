@@ -38,7 +38,7 @@ namespace KAPR_CLI.Internal
 
             // Selenium Configuration
             public string? userAgent { get; set; } = null;
-            public bool headless { get; set; } = false;
+            public bool visible { get; set; } = false;
             public string[] screenResolution { get; set; } = {"1920","1080"};
             public List<string> actions { get; set; } = new List<string>();
 
@@ -189,7 +189,7 @@ namespace KAPR_CLI.Internal
                         break;
                     case "--visible":
                     case "-v":
-                        Program.runtimeConfiguration!.headless = bool.Parse(arguments[i + 1]);
+                        Program.runtimeConfiguration!.visible = bool.Parse(arguments[i + 1]);
                         break;
                     case "--resolution":
                     case "-r":

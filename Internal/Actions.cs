@@ -115,7 +115,14 @@ namespace KAPR_CLI.Internal
                         if (parts.Length == 2)
                         {
                             string url = parts[1];
-                            Navigate(url);
+                            try
+                            {
+                                Navigate(url);
+                            }
+                            catch (Exception e)
+                            {
+                                Output.Error($"Error Navigating to {url}: {e.Message}");
+                            }
                         }
                         else
                         {
@@ -292,7 +299,7 @@ namespace KAPR_CLI.Internal
                         break;
                 }
 
-                if (Program.runtimeConfiguration.forceScreenshot);
+                if (Program.runtimeConfiguration.forceScreenshot) ;
                 {
                     TakeScreenshot($"{count.ToString()}_Forced");
                 }

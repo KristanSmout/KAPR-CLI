@@ -102,7 +102,7 @@ namespace KAPR_CLI.Internal
             chromeOptions.AddArgument($"--user-agent={Program.runtimeConfiguration.userAgent}");
 
             //Headless
-            if(Program.runtimeConfiguration.headless)
+            if(!Program.runtimeConfiguration.visible)
             {
                 chromeOptions.AddArgument("--headless");
             }

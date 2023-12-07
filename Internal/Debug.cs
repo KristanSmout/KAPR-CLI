@@ -21,7 +21,7 @@ namespace KAPR_CLI.Internal
             runtimeConfiguration.sendEmail = true;
             runtimeConfiguration.emailRecipientList = new List<string> { "ksmout@test.com", "test.test@test.cs" };
             runtimeConfiguration.userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0";
-            runtimeConfiguration.headless = false;
+            runtimeConfiguration.visible = false;
             runtimeConfiguration.screenResolution = new string[] { "1920", "1080" };
             runtimeConfiguration.actions = new List<string> { "Action1", "Action2", "Action3" };
 
@@ -61,7 +61,7 @@ namespace KAPR_CLI.Internal
                 Output.Log("    " + email);
             }
             Output.Log("User Agent: " + Program.runtimeConfiguration.userAgent);
-            Output.Log("Headless: " + Program.runtimeConfiguration.headless);
+            Output.Log("Visible: " + Program.runtimeConfiguration.visible);
             Output.Log("Screen Resolution: " + Program.runtimeConfiguration.screenResolution);
             Output.Log("Actions: ");
             foreach (string action in Program.runtimeConfiguration.actions)

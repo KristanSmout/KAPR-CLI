@@ -36,13 +36,13 @@ namespace KAPR_CLI
         {
             if (debugMode)
             {
-                Debug.debugRuntimeConfiguration();
+                //Debug.debugRuntimeConfiguration();
 
                 //Useragent Regex
                 Regex userAgentRegex = new Regex(@"-(-useragent|u) (.+?)\s(?=-)");
                 Regex removeUserAgentRegex = new Regex(@"-(-useragent|u) .*-");
 
-                //string debugargs = @"--smtpserver smtp.test.com --smtpport 58700 --smtpsender testsender --smtpusername testusername --smtppassword testpassword --smtpenablessl true --file F:\Development\Private-Software\KAPR-CLI\bin\Debug\net7.0\Actions.json --headless true --resolution 1920,1080 --useragent ""Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0"" --outputdirectory F:\Development\Private-Software\KAPR-CLI\bin\Debug\net7.0\Output --timeout 5 --sendemail true --emailrecipientlist test@test.com --logging true";
+                //string debugargs = @"--smtpserver smtp.test.com --smtpport 58700 --smtpsender testsender --smtpusername testusername --smtppassword testpassword --smtpenablessl true --file F:\Development\Private-Software\KAPR-CLI\bin\Debug\net7.0\Actions.json --visible true --resolution 1920,1080 --useragent ""Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0"" --outputdirectory F:\Development\Private-Software\KAPR-CLI\bin\Debug\net7.0\Output --timeout 5 --sendemail true --emailrecipientlist test@test.com --logging true";
                 string debugargs = @"-v true";
                 //
 
