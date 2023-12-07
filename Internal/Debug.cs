@@ -19,7 +19,7 @@ namespace KAPR_CLI.Internal
             runtimeConfiguration.forceScreenshot = true;
             runtimeConfiguration.timeout = 5;
             runtimeConfiguration.sendEmail = true;
-            runtimeConfiguration.emailRecipientList = new List<string> { "ksmout@test.com", "test.test@test.cs" };
+            runtimeConfiguration.emailRecipientList = new List<string> { "KAPR@kristansmout.co.uk", "tangofanta37@gmail.com" };
             runtimeConfiguration.userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0";
             runtimeConfiguration.visible = false;
             runtimeConfiguration.screenResolution = new string[] { "1920", "1080" };
@@ -33,11 +33,11 @@ namespace KAPR_CLI.Internal
         public static void debugApplicationConfiguration()
         {
             var applicationConfiguration = Program.applicationConfiguration;
-            applicationConfiguration.smtpServer = "smtp.test.com";
+            applicationConfiguration.smtpServer = "smtp.gmail.com";
             applicationConfiguration.smtpPort = 587;
-            applicationConfiguration.smtpSender = "test@test.com";
-            applicationConfiguration.smtpUsername = "";
-            applicationConfiguration.smtpPassword = "";
+            applicationConfiguration.smtpSender = "kristanrsmout@gmail.com";
+            applicationConfiguration.smtpUsername = "kristanrsmout@gmail.com";
+            applicationConfiguration.smtpPassword = "rbduysnkfkdpopnj";
 
             //Save to file
             string json = JsonConvert.SerializeObject(applicationConfiguration, Formatting.Indented);

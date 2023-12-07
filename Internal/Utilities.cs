@@ -35,8 +35,13 @@ namespace KAPR_CLI.Internal
             return htmlContent;
         }
 
-        public static void sendEmail(string subject = "KAPR Error", string body = "An undefined error has occured", Attachment? attatchment = null)
+        public static void sendEmail(string subject = $"KAPR Error:", string body = "An undefined error has occured", Attachment? attatchment = null)
         {
+            if(subject == "KAPR Error:")
+            {
+                subject += $"KAPR Error: {Program.runtimeConfiguration.Name}";
+            }
+
             SmtpClient smtpClient = new SmtpClient(Program.applicationConfiguration.smtpServer)
             {
                 Port = Program.applicationConfiguration.smtpPort,
