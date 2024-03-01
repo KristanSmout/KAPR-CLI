@@ -11,7 +11,7 @@ namespace KAPR_CLI
     internal class Program
     {
         // Configuration Variables
-        public static bool debugMode = true;
+        public static bool debugMode = false;
         public static bool verboseMode = false;
 
         //Selenium Variables
@@ -37,6 +37,7 @@ namespace KAPR_CLI
             if (debugMode)
             {
                 //Debug.debugRuntimeConfiguration();
+                Debug.debugApplicationConfiguration();
 
                 //Useragent Regex
                 Regex userAgentRegex = new Regex(@"-(-useragent|u) (.+?)\s(?=-)");
@@ -62,7 +63,7 @@ namespace KAPR_CLI
                 Output.Debug("Application Directory: " + currentDirectory.FullName);
             }
 
-            if (args.Length == 0)
+            if (args.Length == 1)
             {
                 Output.Error("No arguments provided\nRun the application with '-h' or '--help' for valid arguments.");
             }

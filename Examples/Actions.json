@@ -1,0 +1,37 @@
+{
+  "Name": "Test",
+  "logging": true,
+  "configurationFilePath": "C:\\Users\\krist\\Desktop\\New folder\\bin\\Debug\\net7.0\\\\Configuration.json",
+  "functionFileDirectory": "C:\\Users\\krist\\Desktop\\New folder\\bin\\Debug\\net7.0\\\\Functions",
+  "outputDirectory": "C:\\Users\\krist\\Desktop\\New folder\\bin\\Debug\\net7.0\\\\Output",
+  "forceScreenshot": true,
+  "timeout": 5,
+  "sendEmail": true,
+  "emailRecipientList": [
+    "KAPR@kristansmout.co.uk",
+    "tangofanta37@gmail.com"
+  ],
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0",
+  "visible": false,
+  "screenResolution": [
+    "1920",
+    "1080"
+  ],
+  "actions": [
+    "navigate https://www.mandmdirect.com/",
+    "waitfor Id onetrust-banner-sdk exists",
+    "sleep 1000",
+    "click id onetrust-accept-btn-handler",
+    "setvalue Id mainSearchText converse",
+    "click id mainSearchBtn",
+    "sleep 1000",
+    "click text Converse Kids Chuck Taylor All Star Translucent Patch Trainers White/Black/White",
+    "snapshot test",
+    "click CssSelector #selectSize > div > div > button",
+    "click CssSelector #sCO30023 > li:nth-child(4) > button",
+    "click id buy_CO30023",
+    "screenshot BasketScreen",
+    "click CssSelector #productDetails > div.atb.atb--pdp > div.atb__ctas > div.atb__actions > button.atb__btn.atb__btn--checkout",
+    "sleep 5000"
+  ]
+}

@@ -40,7 +40,11 @@ namespace KAPR_CLI.Internal
                 Output.Debug("Sending Email");
                 try
                 {
+<<<<<<< HEAD
                     Utilities.sendEmail(message);
+=======
+                    Utilities.sendEmail(body: message);
+>>>>>>> Add project files.
                 }
                 catch (Exception e)
                 {

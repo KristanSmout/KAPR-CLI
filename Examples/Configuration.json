@@ -1,0 +1,8 @@
+{
+  "smtpServer": "smtp.gmail.com",
+  "smtpPort": 587,
+  "smtpSender": "kristanrsmout@gmail.com",
+  "smtpUsername": "kristanrsmout@gmail.com",
+  "smtpPassword": "rbduysnkfkdpopnj",
+  "smtpEnableSSL": true
+}
