@@ -21,7 +21,6 @@ namespace KAPR_CLI.Internal
             new ArgumentDetails { Arguments = "-i, --instructions", Description = "KARP instruction filepath" },
 
             //Runtime Overrides
-            new ArgumentDetails { Arguments = "-n, --output", Description = "Output Directory" },
             new ArgumentDetails { Arguments = "-l, --logging", Description = "Logging [TRUE/FALSE]" },
             new ArgumentDetails { Arguments = "-o, --output", Description = "Output Directory" },
             new ArgumentDetails { Arguments = "-s, --screenshot", Description = "Force Screenshots [TRUE/FALSE]" },
