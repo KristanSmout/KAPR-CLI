@@ -1,15 +1,15 @@
 {
   "Name": "Test",
   "logging": true,
-  "configurationFilePath": "C:\\Users\\krist\\Desktop\\New folder\\bin\\Debug\\net7.0\\\\Configuration.json",
-  "functionFileDirectory": "C:\\Users\\krist\\Desktop\\New folder\\bin\\Debug\\net7.0\\\\Functions",
-  "outputDirectory": "C:\\Users\\krist\\Desktop\\New folder\\bin\\Debug\\net7.0\\\\Output",
+  "configurationFilePath": "S:\\VisualStudio\\Repos\\KAPR-CLI\\bin\\Debug\\net7.0\\Configuration.json",
+  "functionFileDirectory": "S:\\VisualStudio\\Repos\\KAPR-CLI\\bin\\Debug\\net7.0\\Functions",
+  "outputDirectory": "S:\\VisualStudio\\Repos\\KAPR-CLI\\bin\\Debug\\net7.0\\Output",
   "forceScreenshot": true,
   "timeout": 5,
   "sendEmail": true,
   "emailRecipientList": [
-    "KAPR@kristansmout.co.uk",
-    "tangofanta37@gmail.com"
+    "test@test.co.uk",
+    "test@test.com"
   ],
   "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0",
   "visible": false,
@@ -19,7 +19,7 @@
   ],
   "actions": [
     "navigate https://www.mandmdirect.com/",
-    "waitfor Id onetrust-banner-sdk exists",
+    "waitfor cssselector #onetrust-banner-sdk Exists",
     "sleep 1000",
     "click id onetrust-accept-btn-handler",
     "setvalue Id mainSearchText converse",

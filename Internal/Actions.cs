@@ -15,9 +15,6 @@ namespace KAPR_CLI.Internal
         public static int count = 0;
         public static List<ActionDetails> actionList = new List<ActionDetails>
         {
-<<<<<<< HEAD
-            new ActionDetails { Action = "-h, --help", Description = "Displays this help message", Example = "" },
-=======
             new ActionDetails { Action = "click", Description = "Clicks an element", Example = "click Id elementId" },
             new ActionDetails { Action = "navigate", Description = "Navigates to a URL", Example = "navigate https://www.google.com" },
             new ActionDetails { Action = "screenshot", Description = "Takes a screenshot", Example = "screenshot name" },
@@ -31,7 +28,6 @@ namespace KAPR_CLI.Internal
             new ActionDetails { Action = "javascript", Description = "Runs a javascript command", Example = "javascript run alert('Hello World')" },
             new ActionDetails { Action = "waitforload", Description = "Waits for the page to finish loading", Example = "waitforload" },
             new ActionDetails { Action = "routine", Description = "Runs a routine from the routine file", Example = "routine name" }
->>>>>>> Add project files.
 
         };
 
@@ -223,10 +219,10 @@ namespace KAPR_CLI.Internal
                         }
                         break;
                     case "waitfor":
-                        if (parts.Length >= 4)
+                       if (parts.Length >= 4)
                         {
                             LocatorType type = (LocatorType)Enum.Parse(typeof(LocatorType), parts[1], true);
-                            Existance existance = (Existance)Enum.Parse(typeof(Existance), parts[2], true);
+                            Existance existance = (Existance)Enum.Parse(typeof(Existance), parts[3], true);
 
                             if (parts.Length > 4)
                             {
@@ -236,7 +232,7 @@ namespace KAPR_CLI.Internal
                                 }
                             }
 
-                            string value = parts[3];
+                            string value = parts[2];
                             WaitFor(type, value, existance);
                         }
                         else
@@ -358,11 +354,7 @@ namespace KAPR_CLI.Internal
             var screenshot = Program.driver.GetScreenshot();
             try
             {
-<<<<<<< HEAD
-                screenshot.SaveAsFile($"{Program.outputDirectory}\\screenshots\\{name}.jpeg", ScreenshotImageFormat.Jpeg);
-=======
                 screenshot.SaveAsFile($"{Program.outputDirectory}\\screenshots\\{name}.jpeg");
->>>>>>> Add project files.
             }
             catch (Exception e)
             {

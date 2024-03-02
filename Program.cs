@@ -37,7 +37,7 @@ namespace KAPR_CLI
             if (debugMode)
             {
                 //Debug.debugRuntimeConfiguration();
-                Debug.debugApplicationConfiguration();
+                //Debug.debugApplicationConfiguration();
 
                 //Useragent Regex
                 Regex userAgentRegex = new Regex(@"-(-useragent|u) (.+?)\s(?=-)");

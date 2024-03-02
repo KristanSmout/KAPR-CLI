@@ -106,15 +106,10 @@ namespace KAPR_CLI.Internal
             //User Agent
             chromeOptions.AddArgument($"--user-agent={Program.runtimeConfiguration.userAgent}");
 
-<<<<<<< HEAD
-            //Headless
-            if(!Program.runtimeConfiguration.visible)
-=======
             chromeOptions.AddArgument("log-level=3");
 
             //Headless
             if (!Program.runtimeConfiguration.visible)
->>>>>>> Add project files.
             {
                 chromeOptions.AddArgument("--headless");
             }
